@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Attachment extends Model
 {
     use HasFactory;
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
+    }
 }

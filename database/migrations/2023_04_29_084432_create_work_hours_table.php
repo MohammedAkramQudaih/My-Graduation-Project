@@ -15,10 +15,10 @@ class CreateWorkHoursTable extends Migration
     {
         Schema::create('work_hours', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id');
+//            $table->foreignId('patient_id');
             $table->foreignId('doctor_id');
-            $table->string('day');
 //            $table->date('date');
+            $table->string('day');
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamps();

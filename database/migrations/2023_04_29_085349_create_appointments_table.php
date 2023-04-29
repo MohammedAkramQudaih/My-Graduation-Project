@@ -17,7 +17,7 @@ class CreateAppointmentsTable extends Migration
             $table->id();
             $table->foreignId('patient_id');
             $table->foreignId('doctor_id');
-            $table->dateTime('booking_day');
+            $table->string('booking_day');
             $table->date('booking_date');
             $table->time('booking_time');
             $table->timestamps();
