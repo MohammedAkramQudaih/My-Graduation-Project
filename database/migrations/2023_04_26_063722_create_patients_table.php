@@ -23,7 +23,7 @@ class CreatePatientsTable extends Migration
             $table->date('birthdate');
             $table->enum('sex',['female','male']);
             $table->enum('diabetic_type',['Type 1 Diabetes','Type 2 Diabetes','unknown'])->default('unknown');
-            $table->string('attachments')->nullable();
+//            $table->string('attachments')->nullable();
             $table->timestamps();
         });
     }
