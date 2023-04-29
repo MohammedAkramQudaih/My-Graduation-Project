@@ -19,10 +19,11 @@ class CreatePatientsTable extends Migration
             $table->string('email')->unique();
             $table->string('phone_No')->unique();
             $table->float('age')->nullable();
+            $table->string('image')->nullable();
             $table->string('address');
             $table->date('birthdate');
             $table->enum('sex',['female','male']);
-            $table->enum('diabetic_type',['Type 1 Diabetes','Type 2 Diabetes','unknown'])->default('unknown');
+            $table->enum('diabetic_type',['Type 1 Diabetes','Type 2 Diabetes','Gestational diabetes','unknown'])->default('unknown');
 //            $table->string('attachments')->nullable();
             $table->timestamps();
         });

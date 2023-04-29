@@ -17,11 +17,12 @@ class CreateDoctorsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->nullable();
+            $table->string('phone_No')->unique()->nullable();
 //            $table->time('work_hours');
             $table->text('qualifications')->nullable();
             $table->string('address');
-
+            $table->string('image')->nullable();
+            $table->enum('rateing',[0,1,2,3,4,5])->default(0);
             $table->timestamps();
         });
     }
