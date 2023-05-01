@@ -17,8 +17,8 @@ class CreatePatientBiographiesTable extends Migration
             $table->id();
             $table->foreignId('patient_id');
             $table->foreignId('doctor_id');
-            $table->text('Diagnostics');   // التشخيص
-            $table->text('treatment');    /// العلاج
+            $table->text('diagnostics');   // التشخيص
+            $table->text('medications');    /// الأدوية
             $table->timestamps();
         });
     }

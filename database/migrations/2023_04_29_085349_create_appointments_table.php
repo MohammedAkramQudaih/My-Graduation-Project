@@ -20,6 +20,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('booking_day');
             $table->date('booking_date');
             $table->time('booking_time');
+            $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

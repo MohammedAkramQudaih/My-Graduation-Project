@@ -16,9 +16,10 @@ class CreateMeasurementsTable extends Migration
         Schema::create('measurements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id');
-            $table->float('Fasting');   //صائم
-            $table->float('creator');   // مفطر
-            $table->float('random');    ///  عشوائي
+            $table->date('measurement_date')->nullable();
+            $table->float('Fasting')->nullable();   //صائم
+            $table->float('creator')->nullable();   // مفطر
+            $table->float('random')->nullable();    ///  عشوائي
             $table->timestamps();
         });
     }

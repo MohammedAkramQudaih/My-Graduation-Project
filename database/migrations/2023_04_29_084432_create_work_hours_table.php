@@ -18,7 +18,7 @@ class CreateWorkHoursTable extends Migration
 //            $table->foreignId('patient_id');
             $table->foreignId('doctor_id');
 //            $table->date('date');
-            $table->string('day');
+            $table->enum('day', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
             $table->time('start_time');
             $table->time('end_time');
             $table->timestamps();
