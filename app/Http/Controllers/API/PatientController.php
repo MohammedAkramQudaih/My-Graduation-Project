@@ -63,7 +63,6 @@ class PatientController extends Controller
                 'code' => 201,
                 'message' => 'successfully registered',
                 'data' => $patient,
-                //                'token' => $token
             ]);
         }
     }
@@ -82,7 +81,6 @@ class PatientController extends Controller
                 'message' => $validator->errors()->all(),
                 'data' => []
             ]);
-            //            return response()->json(['error' => $validator->errors()], 401);
         }
         $patient = User::where('email', $request->email)->where('role', 'patient')->first();
         if (!$patient || !Hash::check($request->password, $patient->password)) {
@@ -94,9 +92,6 @@ class PatientController extends Controller
         }
 
         $token = $patient->createToken('AuthToken')->plainTextToken;
-
-        //    $patient = $request->user();
-        //        return $patient;
 
 
         return Response::json([
@@ -128,12 +123,6 @@ class PatientController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function storeAttachments(Request $request)
     {
         //
@@ -179,12 +168,6 @@ class PatientController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
@@ -248,20 +231,20 @@ class PatientController extends Controller
         ]);
     }
 
-    // public function medicalData(Request $request)
-    // {
-    //     # code...
-    //     $user = $request->user();
-    //     $patient = Patient::where('email', $user->email)->first();
+    public function patientBiographies(Request $request)
+    {
+        # code...
+        $user = $request->user();
+        $patient = Patient::with('patientBiography')->where('email', $user->email)->first();
 
-    //     return response()->json([
-    //         'code' =>200,
-    //         'message' => '',
-    //         'data'=>
-    //     ]);
+        // return $patient;
 
-
-    // }
+        return Response::json([
+            'code' => 200,
+            'message' => 'patient biography ',
+            'data' => $patient->patient_biography
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.

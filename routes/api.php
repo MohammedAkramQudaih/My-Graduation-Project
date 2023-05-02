@@ -33,4 +33,5 @@ Route::post('updateProfile',[PatientController::class, 'updateProfile'])->name('
 Route::get('medicalData',[PatientController::class, 'medicalData'])->name('medicalData')->middleware('auth:sanctum');
 Route::post('storeAttachments',[PatientController::class, 'storeAttachments'])->name('storeAttachments')->middleware('auth:sanctum');
 Route::post('deleteAttachments/{attachment}',[PatientController::class, 'deleteAttachments'])->name('deleteAttachments')->middleware('auth:sanctum');
+Route::get('patientBiographies',[PatientController::class, 'patientBiographies'])->name('patientBiographies')->middleware('auth:sanctum');
 
