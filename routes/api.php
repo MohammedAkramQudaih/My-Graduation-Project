@@ -34,4 +34,8 @@ Route::get('medicalData',[PatientController::class, 'medicalData'])->name('medic
 Route::post('storeAttachments',[PatientController::class, 'storeAttachments'])->name('storeAttachments')->middleware('auth:sanctum');
 Route::post('deleteAttachments/{attachment}',[PatientController::class, 'deleteAttachments'])->name('deleteAttachments')->middleware('auth:sanctum');
 Route::get('patientBiographies',[PatientController::class, 'patientBiographies'])->name('patientBiographies')->middleware('auth:sanctum');
+Route::get('doctors',[PatientController::class, 'doctors'])->name('doctors')->middleware('auth:sanctum');
+Route::post('ratingDoctor/{doctor}',[PatientController::class, 'ratingDoctor'])->name('ratingDoctor')->middleware('auth:sanctum');
+Route::post('appointmentBooking/{doctor}',[PatientController::class, 'appointmentBooking'])->name('appointmentBooking')->middleware('auth:sanctum');
+Route::get('showAppointments',[PatientController::class, 'showAppointments'])->name('showAppointments')->middleware('auth:sanctum');
 

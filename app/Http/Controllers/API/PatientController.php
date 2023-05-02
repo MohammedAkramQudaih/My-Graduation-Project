@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use App\Models\Attachment;
+use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
@@ -245,6 +247,74 @@ class PatientController extends Controller
             'data' => $patient->patient_biography
         ]);
     }
+
+    public function doctors()
+    {
+
+        # code...
+        $doctors = Doctor::get();
+
+        return Response::json([
+            'code' => 200,
+            'messag' => 'all doctors',
+            'data' => $doctors
+        ]);
+    }
+
+    public function ratingDoctor(Request $request, $id)
+    {
+        # code...
+        $doctor = Doctor::findOrFail($id);
+        $rateing = $request->rateing;
+
+        $doctor->update([
+            'rateing' => $rateing
+        ]);
+    }
+
+    public function appointmentBooking(Request $request, $id)
+    {
+        # code...
+        // $doctor=Doctor::findOrFail($id);
+        $user = $request->user();
+        $patient = Patient::where('email', $user->email)->first();
+
+        $request->validate([
+            'booking_day' => ['required'],
+            'booking_date' => ['required'],
+            'booking_time' => ['required'],
+
+        ]);
+
+        $appointment = Appointment::create([
+            'doctor_id' => $id,
+            'patient_id' => $patient->id,
+            'booking_day' => $request->booking_day,
+            'booking_date' => $request->booking_date,
+            'booking_time' => $request->booking_time,
+        ]);
+
+        return Response::json([
+            'code' => 200,
+            'message' => 'Appointment created succesfully',
+            'data' => $appointment,
+        ]);
+    }
+
+    public function showAppointments(Request $request)
+    {
+        # code...
+        $user = $request->user();
+        $patient = Patient::with('appointments')->where('email', $user->email)->first();
+
+        return Response::json([
+            'code' => 200,
+            'message' => 'appointments',
+            'data' => $patient->appointments
+        ]);
+    }
+
+
 
     /**
      * Remove the specified resource from storage.
