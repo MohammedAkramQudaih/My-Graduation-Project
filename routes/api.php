@@ -38,4 +38,6 @@ Route::get('doctors',[PatientController::class, 'doctors'])->name('doctors')->mi
 Route::post('ratingDoctor/{doctor}',[PatientController::class, 'ratingDoctor'])->name('ratingDoctor')->middleware('auth:sanctum');
 Route::post('appointmentBooking/{doctor}',[PatientController::class, 'appointmentBooking'])->name('appointmentBooking')->middleware('auth:sanctum');
 Route::get('showAppointments',[PatientController::class, 'showAppointments'])->name('showAppointments')->middleware('auth:sanctum');
+Route::post('storeMeasurement',[PatientController::class, 'storeMeasurement'])->name('storeMeasurement')->middleware('auth:sanctum');
+Route::get('showMeasurements',[PatientController::class, 'showMeasurements'])->name('showMeasurements')->middleware('auth:sanctum');
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Attachment;
 use App\Models\Doctor;
+use App\Models\Measurement;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
@@ -314,7 +315,37 @@ class PatientController extends Controller
         ]);
     }
 
+    public function storeMeasurement(Request $request)
+    {
+        # code...
+        $user = $request->user();
+        $patient = Patient::where('email', $user->email)->first();
 
+        $measurement = Measurement::create([
+            'patient_id' => $patient->id,
+            'measurement_date' => $request->measurement_date,
+            'Fasting' => $request->Fasting,
+            'creator' => $request->creator,
+            'random' => $request->random,
+        ]);
+        return Response::json([
+            'code' => 200,
+            'message' => 'Diabetes measurement was recorded successfully',
+            'data' => $measurement,
+        ]);
+    }
+    public function showMeasurements(Request $request)
+    {
+        # code...
+        $user = $request->user();
+        $patient = Patient::with('measurements')->where('email', $user->email)->first();
+
+        return Response::json([
+            'code' => 200,
+            'message' => 'measurements',
+            'data' => $patient->measurements
+        ]);
+    }
 
     /**
      * Remove the specified resource from storage.
