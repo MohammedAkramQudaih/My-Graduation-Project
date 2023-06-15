@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\PatientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,9 +21,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('patient/register',[PatientController::class,'register'])->name('register');
-Route::post('patient/login',[PatientController::class,'login'])->name('login');
-Route::get('patient/logout',[PatientController::class,'logout'])->name('logout')->middleware('auth:sanctum');
+Route::post('patient/register',[AuthController::class,'registerPatient'])->name('patient.register');
+Route::post('patient/login',[AuthController::class,'loginPatient'])->name('patient.login');
+
+Route::post('doctor/register',[AuthController::class,'registerDoctor'])->name('doctor.register');
+Route::post('doctor/login',[AuthController::class,'loginDoctor'])->name('doctor.login');
+
+
+Route::get('logout/',[AuthController::class,'logout'])->name('logout')->middleware('auth:sanctum');
+
+
 Route::get('patient/profile', [PatientController::class,'profile'])->middleware('auth:sanctum');
 
 
