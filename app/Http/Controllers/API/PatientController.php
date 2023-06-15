@@ -27,91 +27,91 @@ class PatientController extends Controller
      */
 
 
-    public function register(Request $request)
-    {
-        $validator =  Validator::make($request->all(), [
-            'email' => 'required|email|unique:patients',
-            'name' => 'required|string',
-            'password' => ['required'],
+    // public function register(Request $request)
+    // {
+    //     $validator =  Validator::make($request->all(), [
+    //         'email' => 'required|email|unique:patients',
+    //         'name' => 'required|string',
+    //         'password' => ['required'],
 
-        ]);
-        if ($validator->fails()) {
-
-
-            return Response::json([
-                'code' => 401,
-                'message' => 'registration failed',
-                'data' => $validator->messages(),
-            ]);
-        } else {
-
-            $name = $request->name;
-            $email = $request->email;
-            $password = $request->password;
-
-            $patient = Patient::create([
-                'name' => $name,
-                'email' => $email,
-                'password' => Hash::make($password)
-            ]);
-
-            User::create([
-                'name' => $patient->name,
-                'email' => $patient->email,
-                'password' => $patient->password,
-                'role' => 'patient'
-
-            ]);
-            return Response::json([
-                'code' => 201,
-                'message' => 'successfully registered',
-                'data' => $patient,
-            ]);
-        }
-    }
-    public function login(Request $request)
-    {
-
-        $validator = Validator::make($request->all(), [
-
-            'email' => 'required|email',
-            'password' => ['required'],
-        ]);
-
-        if ($validator->fails()) {
-            return Response::json([
-                'code' => 401,
-                'message' => $validator->errors()->all(),
-                'data' => []
-            ]);
-        }
-        $patient = User::where('email', $request->email)->where('role', 'patient')->first();
-        if (!$patient || !Hash::check($request->password, $patient->password)) {
-            return Response::json([
-                'code' => 401,
-                'message' => 'Invalid Credentials',
-                'data' => []
-            ]);
-        }
-
-        $token = $patient->createToken('AuthToken')->plainTextToken;
+    //     ]);
+    //     if ($validator->fails()) {
 
 
-        return Response::json([
-            'code' => 200,
-            'message' => 'logged in successfully',
-            'data' => [
+    //         return Response::json([
+    //             'code' => 401,
+    //             'message' => 'registration failed',
+    //             'data' => $validator->messages(),
+    //         ]);
+    //     } else {
 
-                'token' => $token,
-                //                'name' => $patient->name,
-                //                'email' => $patient->email,
-            ]
-        ]);
-    }
-    public function logout(Request $request)
-    {
-        return 'fkdfdklnjbgn.,';
-    }
+    //         $name = $request->name;
+    //         $email = $request->email;
+    //         $password = $request->password;
+
+    //         $patient = Patient::create([
+    //             'name' => $name,
+    //             'email' => $email,
+    //             'password' => Hash::make($password)
+    //         ]);
+
+    //         User::create([
+    //             'name' => $patient->name,
+    //             'email' => $patient->email,
+    //             'password' => $patient->password,
+    //             'role' => 'patient'
+
+    //         ]);
+    //         return Response::json([
+    //             'code' => 201,
+    //             'message' => 'successfully registered',
+    //             'data' => $patient,
+    //         ]);
+    //     }
+    // }
+    // public function login(Request $request)
+    // {
+
+    //     $validator = Validator::make($request->all(), [
+
+    //         'email' => 'required|email',
+    //         'password' => ['required'],
+    //     ]);
+
+    //     if ($validator->fails()) {
+    //         return Response::json([
+    //             'code' => 401,
+    //             'message' => $validator->errors()->all(),
+    //             'data' => []
+    //         ]);
+    //     }
+    //     $patient = User::where('email', $request->email)->where('role', 'patient')->first();
+    //     if (!$patient || !Hash::check($request->password, $patient->password)) {
+    //         return Response::json([
+    //             'code' => 401,
+    //             'message' => 'Invalid Credentials',
+    //             'data' => []
+    //         ]);
+    //     }
+
+    //     $token = $patient->createToken('AuthToken')->plainTextToken;
+
+
+    //     return Response::json([
+    //         'code' => 200,
+    //         'message' => 'logged in successfully',
+    //         'data' => [
+
+    //             'token' => $token,
+    //             //                'name' => $patient->name,
+    //             //                'email' => $patient->email,
+    //         ]
+    //     ]);
+    // }
+    // public function logout(Request $request)
+    // {
+    //     return 'fkdfdklnjbgn.,';
+    // }
     public function profile(Request $request)
     {
         $patient = $request->user();
