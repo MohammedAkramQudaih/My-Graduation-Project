@@ -16,7 +16,7 @@ class CreateWorkHoursTable extends Migration
         Schema::create('work_hours', function (Blueprint $table) {
             $table->id();
 //            $table->foreignId('patient_id');
-            $table->foreignId('doctor_id');
+            $table->foreignId('doctor_id')->constrained('doctors','id');;
 //            $table->date('date');
             $table->enum('day', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
             $table->time('start_time');

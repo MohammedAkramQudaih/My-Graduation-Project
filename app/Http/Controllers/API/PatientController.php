@@ -114,7 +114,8 @@ class PatientController extends Controller
     // }
     public function profile(Request $request)
     {
-        $patient = $request->user();
+        $user = $request->user();
+        $patient = Patient::with('patientBiography', 'measurements', 'appointments', 'attachments')->where('user_id', $user->id)->first();
         // return $patient;
 
         return response()->json([
@@ -126,19 +127,90 @@ class PatientController extends Controller
         //
     }
 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateProfile(Request $request)
+    {
+        //
+        $user = $request->user();
+        $patient = Patient::where('user_id', $user->id)->first();
+        // return $patient;
+
+
+        $request->validate([
+            'phone_No' => ['numeric'],
+            'age' => ['nullable'],
+            'image' => ['file'],
+            'address' => ['required'],
+            'gender' => ['required'],
+            'diabetic_type' => ['required']
+
+
+
+
+        ]);
+        // $patient->update($request->all());
+        $imageName = $patient->image;
+        // return  $patient->image;
+        $file = $request->file('image');
+        // return $file;
+
+        if (!isNull($file)) {
+            $ex = $file->getClientOriginalExtension();
+            $imageName = 'patientImage' . rand() . time() . '.' . $ex;
+            $file->move(public_path('api/patient/image'), $imageName);
+        } else {
+            $ex = $request->file('image')->getClientOriginalExtension();
+            $imageName = 'patientImage' . rand() . time() . '.' . $ex;
+            $file->move(public_path('api/patient/image'), $imageName);
+        }
+        // return $imageName;
+
+
+        $patient->update([
+
+            'phone_No' => $request->phone_No,
+            'age' => $request->age,
+            'image' => $imageName,
+            'address' => $request->address,
+            'birthdate' => $request->birthdate,
+            'gender' => $request->gender,
+            'diabetic_type' => $request->diabetic_type,
+
+
+        ]);
+        // $patient->update($request->except('image'));
+        // $patient->update([
+        //     'image' => $imageName,
+        // ]);
+
+
+        return Response::json([
+            'code' => 200,
+            'message' => 'patient updated successfully',
+            'data' =>  $patient
+
+        ]);
+    }
+
     public function storeAttachments(Request $request)
     {
         //
         $user = $request->user();
         $patient = Patient::with('attachments')->where('email', $user->email)->first();
-
+        // return $patient;
         $request->validate([
             'attachments' => 'file'
         ]);
 
         $ex = $request->file('attachment')->getClientOriginalExtension();
         $file_path = 'abc' . rand() . time() . '.' . $ex;
-        $request->file('attachment')->move(public_path('attachments'), $file_path);
+        $request->file('attachment')->move(public_path('api/patient/attachments'), $file_path);
 
         $attachment = Attachment::create([
             'patient_id' => $patient->id,
@@ -148,7 +220,7 @@ class PatientController extends Controller
 
         return Response::json(
             [
-                'code' => 201,
+                'code' => 200,
                 'message' => 'attachment created succesfully',
                 'data' => $attachment
             ]
@@ -176,63 +248,7 @@ class PatientController extends Controller
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updateProfile(Request $request)
-    {
-        //
-        $user = $request->user();
-        $patient = Patient::with('attachments')->where('email', $user->email)->first();
-        // return $patient;
 
-
-        $request->validate([
-            'phone_No' => ['numeric'],
-            'age' => ['nullable'],
-            'image' => ['file'],
-            'address' => ['required'],
-            'sex' => ['required'],
-            'diabetic_type' => ['required']
-
-
-
-
-        ]);
-        // $patient->update($request->all());
-        $imageName = $patient->image;
-        $file = $request->file('image');
-
-        if (!isNull($file)) {
-            $ex = $file->getClientOriginalExtension();
-            $imageName = 'image' . rand() . time() . '.' . $ex;
-            $file->move(public_path('api/patient/image'), $imageName);
-        }
-
-
-        $patient->update([
-            'phone_No' => $request->phone_No,
-            'age' => $request->age,
-            'image' => $request->image,
-            'address' => $request->address,
-            'birthdate' => $request->birthdate,
-            'sex' => $request->sex,
-            'diabetic_type' => $request->diabetic_type,
-
-
-        ]);
-
-        return Response::json([
-            'code' => 200,
-            'message' => 'patient updated successfully',
-            'data' =>  $patient
-
-        ]);
-    }
 
     public function patientBiographies(Request $request)
     {

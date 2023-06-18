@@ -15,7 +15,7 @@ class CreatePatientBiographiesTable extends Migration
     {
         Schema::create('patient_biographies', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id');
+            $table->foreignId('patient_id')->constrained('patients','id');
             $table->foreignId('doctor_id');
             $table->text('diagnostics');   // التشخيص
             $table->text('medications');    /// الأدوية

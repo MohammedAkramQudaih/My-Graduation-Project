@@ -15,7 +15,7 @@ class CreateMeasurementsTable extends Migration
     {
         Schema::create('measurements', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id');
+            $table->foreignId('patient_id')->constrained('patients','id');
             $table->date('measurement_date')->nullable();
             $table->float('Fasting')->nullable();   //صائم
             $table->float('creator')->nullable();   // مفطر

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\DoctorController;
 use App\Http\Controllers\API\PatientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,7 @@ Route::get('patient/profile', [PatientController::class,'profile'])->middleware(
 // Route::post('changePassword', [PatientController::class,'changePassword'])->name('changePassword')->middleware('auth:sanctum');
 
 Route::post('patient/updateProfile',[PatientController::class, 'updateProfile'])->name('updateProfile')->middleware('auth:sanctum');
+
 Route::get('patient/medicalData',[PatientController::class, 'medicalData'])->name('medicalData')->middleware('auth:sanctum');
 Route::post('patient/storeAttachments',[PatientController::class, 'storeAttachments'])->name('storeAttachments')->middleware('auth:sanctum');
 Route::post('patient/deleteAttachments/{attachment}',[PatientController::class, 'deleteAttachments'])->name('deleteAttachments')->middleware('auth:sanctum');
@@ -48,4 +50,11 @@ Route::post('patient/appointmentBooking/{doctor}',[PatientController::class, 'ap
 Route::get('patient/showAppointments',[PatientController::class, 'showAppointments'])->name('showAppointments')->middleware('auth:sanctum');
 Route::post('patient/storeMeasurement',[PatientController::class, 'storeMeasurement'])->name('storeMeasurement')->middleware('auth:sanctum');
 Route::get('patient/showMeasurements',[PatientController::class, 'showMeasurements'])->name('showMeasurements')->middleware('auth:sanctum');
+
+
+
+
+/** Doctor Routes */
+
+Route::get('doctor/profile', [DoctorController::class,'profile'])->name('doctor.profile')->middleware('auth:sanctum');;
 

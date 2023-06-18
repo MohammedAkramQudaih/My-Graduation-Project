@@ -15,7 +15,7 @@ class CreateDoctorsTable extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-           $table->foreignId('user_id');
+           $table->foreignId('user_id')->constrained('users','id');
             $table->string('name');
             $table->string('email')->unique();
             // $table->string('password');
