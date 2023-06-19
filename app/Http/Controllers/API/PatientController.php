@@ -396,17 +396,16 @@ class PatientController extends Controller
 
     // PatientController.php
 
-public function searchDoctors(Request $request)
-{
-    $query = $request->input('query');
-    
-    $doctors = Doctor::where('name', 'like', '%' . $query . '%')->get();
-    
-    return Response::json([
-        'code' => 200,
-        'message' => 'Doctor search results',
-        'data' => $doctors
-    ]);
-}
+    public function searchDoctors(Request $request)
+    {
+        $query = $request->input('query');
 
+        $doctors = Doctor::where('name', 'like', '%' . $query . '%')->get();
+
+        return Response::json([
+            'code' => 200,
+            'message' => 'Doctor search results',
+            'data' => $doctors
+        ]);
+    }
 }

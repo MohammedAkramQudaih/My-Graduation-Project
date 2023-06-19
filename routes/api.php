@@ -55,6 +55,9 @@ Route::get('patient/searchDoctors', [PatientController::class, 'searchDoctors'])
 
 
 
+Route::post('forgetPassword', [AuthController::class,'sendResetLinkEmail'])->name('forgetPassword');
+Route::post('resetPassword', [AuthController::class,'resetPassword'])->name('password.reset');
+
 
 
 /** Doctor Routes */

@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -193,5 +194,45 @@ class AuthController extends Controller
         ]);
     }
 
+
+
+    public function sendResetLinkEmail(Request $request)
+    {
+
+        $validatedData = $request->validate(['email' => 'required|email']);
+
+        $response = Password::sendResetLink($validatedData);
+
+        return response()->json([
+            'code' => 200,
+            'msg' => "Reset link sent to your email",
+            'data' => [],
+        ]);
+    }
+
+
+    public function resetPassword(Request $request)
+    {
+
+        $validatedData = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8|',
+            'token' => 'required'
+        ]);
+
+        // Find the user associated with the email
+        $user = User::where('email', $validatedData['email'])->first();
+        // return $validatedData['token'];
+        // If the user is found and the token is valid
+        if ($user && $validatedData['email'] === $user->email) {
+            // Update the user's password
+            $user->password = Hash::make($validatedData['password']);
+            $user->save();
+
+            return response()->json(['message' => 'Password reset successfully'], 200);
+        } else {
+            return response()->json(['error' => 'Invalid token or email'], 401);
+        }
+    }
 
 }
