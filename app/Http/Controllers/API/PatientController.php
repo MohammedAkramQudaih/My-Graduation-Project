@@ -146,7 +146,6 @@ class PatientController extends Controller
         //
         $user = $request->user();
         $patient = Patient::where('user_id', $user->id)->first();
-        // return $patient;
 
 
         $request->validate([
@@ -155,7 +154,7 @@ class PatientController extends Controller
             'image' => ['file'],
             'address' => ['required'],
             'gender' => ['required'],
-            'diabetic_type' => ['required']
+            'diabetic_type' => ['required'],
 
 
 
@@ -163,20 +162,14 @@ class PatientController extends Controller
         ]);
         // $patient->update($request->all());
         $imageName = $patient->image;
-        // return  $patient->image;
         $file = $request->file('image');
-        // return $file;
 
-        if (!isNull($file)) {
+        if (!is_null($file)) {
             $ex = $file->getClientOriginalExtension();
             $imageName = 'patientImage' . rand() . time() . '.' . $ex;
             $file->move(public_path('api/patient/image'), $imageName);
-        } else {
-            $ex = $request->file('image')->getClientOriginalExtension();
-            $imageName = 'patientImage' . rand() . time() . '.' . $ex;
-            $file->move(public_path('api/patient/image'), $imageName);
         }
-        // return $imageName;
+
 
 
         $patient->update([
@@ -191,11 +184,6 @@ class PatientController extends Controller
 
 
         ]);
-        // $patient->update($request->except('image'));
-        // $patient->update([
-        //     'image' => $imageName,
-        // ]);
-
 
         return Response::json([
             'code' => 200,
@@ -210,13 +198,12 @@ class PatientController extends Controller
         //
         $user = $request->user();
         $patient = Patient::with('attachments')->where('user_id', $user->id)->first();
-        // return $patient;
         $request->validate([
-            'attachments' => 'file'
+            'attachment' => ['required','file'],
         ]);
 
         $ex = $request->file('attachment')->getClientOriginalExtension();
-        $file_path = 'abc' . rand() . time() . '.' . $ex;
+        $file_path = 'attachment' . rand() . time() . '.' . $ex;
         $request->file('attachment')->move(public_path('api/patient/attachments'), $file_path);
 
         $attachment = Attachment::create([
