@@ -51,6 +51,9 @@ Route::get('patient/showAppointments',[PatientController::class, 'showAppointmen
 Route::post('patient/storeMeasurement',[PatientController::class, 'storeMeasurement'])->name('storeMeasurement')->middleware('auth:sanctum');
 Route::get('patient/showMeasurements',[PatientController::class, 'showMeasurements'])->name('showMeasurements')->middleware('auth:sanctum');
 
+Route::get('patient/searchDoctors', [PatientController::class, 'searchDoctors'])->name('doctors.search')->middleware('auth:sanctum');
+
+
 
 
 

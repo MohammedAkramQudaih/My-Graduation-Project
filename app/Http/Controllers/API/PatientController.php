@@ -118,9 +118,16 @@ class PatientController extends Controller
         $patient = Patient::with('patientBiography', 'measurements', 'appointments', 'attachments')->where('user_id', $user->id)->first();
         // return $patient;
 
-        return response()->json([
-            'patient' => $patient,
-        ], 200);
+        // return response()->json([
+        //     'patient' => $patient,
+        // ], 200);
+
+        return Response::json([
+            'code' => 200,
+            'message' => 'patient data',
+            'data' =>  $patient
+
+        ]);
     }
     public function index()
     {
@@ -202,7 +209,7 @@ class PatientController extends Controller
     {
         //
         $user = $request->user();
-        $patient = Patient::with('attachments')->where('email', $user->email)->first();
+        $patient = Patient::with('attachments')->where('user_id', $user->id)->first();
         // return $patient;
         $request->validate([
             'attachments' => 'file'
@@ -252,16 +259,21 @@ class PatientController extends Controller
 
     public function patientBiographies(Request $request)
     {
-        # code...
         $user = $request->user();
-        $patient = Patient::with('patientBiography')->where('email', $user->email)->first();
+        $patient = Patient::where('user_id', $user->id)->with('patientBiography')->first();
 
-        // return $patient;
+        if (!$patient) {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Patient not found',
+                'data' => []
+            ], 404);
+        }
 
-        return Response::json([
+        return response()->json([
             'code' => 200,
-            'message' => 'patient biography ',
-            'data' => $patient->patient_biography
+            'message' => 'Patient biography',
+            'data' => $patient->patientBiography
         ]);
     }
 
@@ -269,7 +281,7 @@ class PatientController extends Controller
     {
 
         # code...
-        $doctors = Doctor::get();
+        $doctors = Doctor::orderByDesc('rateing')->get();
 
         return Response::json([
             'code' => 200,
@@ -282,10 +294,17 @@ class PatientController extends Controller
     {
         # code...
         $doctor = Doctor::findOrFail($id);
+        // return $doctor;  
         $rateing = $request->rateing;
 
         $doctor->update([
             'rateing' => $rateing
+        ]);
+
+        return Response::json([
+            'code' => 200,
+            'messag' => 'the rateing for doctor',
+            'data' => $rateing
         ]);
     }
 
@@ -322,7 +341,7 @@ class PatientController extends Controller
     {
         # code...
         $user = $request->user();
-        $patient = Patient::with('appointments')->where('email', $user->email)->first();
+        $patient = Patient::with('appointments')->where('user_id', $user->id)->first();
 
         return Response::json([
             'code' => 200,
@@ -335,7 +354,7 @@ class PatientController extends Controller
     {
         # code...
         $user = $request->user();
-        $patient = Patient::where('email', $user->email)->first();
+        $patient = Patient::where('user_id', $user->id)->first();
 
         $measurement = Measurement::create([
             'patient_id' => $patient->id,
@@ -354,7 +373,7 @@ class PatientController extends Controller
     {
         # code...
         $user = $request->user();
-        $patient = Patient::with('measurements')->where('email', $user->email)->first();
+        $patient = Patient::with('measurements')->where('user_id', $user->id)->first();
 
         return Response::json([
             'code' => 200,
@@ -373,4 +392,21 @@ class PatientController extends Controller
     {
         //
     }
+
+
+    // PatientController.php
+
+public function searchDoctors(Request $request)
+{
+    $query = $request->input('query');
+    
+    $doctors = Doctor::where('name', 'like', '%' . $query . '%')->get();
+    
+    return Response::json([
+        'code' => 200,
+        'message' => 'Doctor search results',
+        'data' => $doctors
+    ]);
+}
+
 }
