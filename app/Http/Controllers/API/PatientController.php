@@ -129,10 +129,7 @@ class PatientController extends Controller
 
         ]);
     }
-    public function index()
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
@@ -152,15 +149,15 @@ class PatientController extends Controller
             'phone_No' => ['numeric'],
             'age' => ['nullable'],
             'image' => ['file'],
-            'address' => ['required'],
-            'gender' => ['required'],
-            'diabetic_type' => ['required'],
+            'email' => ['email','unique:users','unique:patients'],
+            'name' => ['string'],
+            // 'diabetic_type' => ['required'],
 
 
 
 
         ]);
-        // $patient->update($request->all());
+        // return($request->all());
         $imageName = $patient->image;
         $file = $request->file('image');
 
@@ -168,22 +165,33 @@ class PatientController extends Controller
             $ex = $file->getClientOriginalExtension();
             $imageName = 'patientImage' . rand() . time() . '.' . $ex;
             $file->move(public_path('api/patient/image'), $imageName);
+            $patient->update(['image' => $imageName,]);
         }
 
+        // return($request->all());
+        if (!is_null($request->email)){
+            // $user->email ==  $request->email;
+            $user->update(['email' => $request->email ,]);
+            // return $user;
+        }
+        if (!is_null($request->name)){
+            $user->update(['name' => $request->name ,]);
+        }
+        $patient->update($request->except('image'));
+
+        // $patient->update([
+
+        //     'phone_No' => $request->phone_No,
+        //     'age' => $request->age,
+        //     'image' => $imageName,
+        //     'address' => $request->address,
+        //     'birthdate' => $request->birthdate,
+        //     'gender' => $request->gender,
+        //     'diabetic_type' => $request->diabetic_type,
+        //     'patient_status'=> $request->patient_status  
 
 
-        $patient->update([
-
-            'phone_No' => $request->phone_No,
-            'age' => $request->age,
-            'image' => $imageName,
-            'address' => $request->address,
-            'birthdate' => $request->birthdate,
-            'gender' => $request->gender,
-            'diabetic_type' => $request->diabetic_type,
-
-
-        ]);
+        // ]);
 
         return Response::json([
             'code' => 200,
@@ -193,13 +201,15 @@ class PatientController extends Controller
         ]);
     }
 
+
+
     public function storeAttachments(Request $request)
     {
         //
         $user = $request->user();
         $patient = Patient::with('attachments')->where('user_id', $user->id)->first();
         $request->validate([
-            'attachment' => ['required','file'],
+            'attachment' => ['required', 'file'],
         ]);
 
         $ex = $request->file('attachment')->getClientOriginalExtension();
@@ -274,6 +284,17 @@ class PatientController extends Controller
             'code' => 200,
             'messag' => 'all doctors',
             'data' => $doctors
+        ]);
+    }
+
+    public function doctorProfile(Request $request, $id)
+    {
+        //
+        $doctor = Doctor::findOrFail($id);
+        return Response::json([
+            'code' => 200,
+            'messag' => 'Dr. ' . $doctor->name . '`s data',  //Dr. Mohamed's data
+            'data' => $doctor
         ]);
     }
 

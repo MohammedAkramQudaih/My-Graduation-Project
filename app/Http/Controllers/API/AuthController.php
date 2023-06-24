@@ -19,7 +19,7 @@ class AuthController extends Controller
     public function registerPatient(Request $request)
     {
         $validator =  Validator::make($request->all(), [
-            'email' => 'required|email|unique:patients',
+            'email' => 'required','email','unique:patients','unique:users',
             'name' => 'required|string',
             'password' => ['required'],
 

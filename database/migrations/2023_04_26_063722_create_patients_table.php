@@ -15,7 +15,7 @@ class CreatePatientsTable extends Migration
     {
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users','id');
+            $table->foreignId('user_id')->constrained('users', 'id');
             $table->string('name');
             $table->string('email')->unique();
             // $table->string('password');
@@ -25,8 +25,8 @@ class CreatePatientsTable extends Migration
             $table->string('address')->nullable();
             $table->date('birthdate')->nullable();
             $table->enum('gender', ['male', 'female']);
-            $table->enum('diabetic_type', ['Type 1 Diabetes', 'Type 2 Diabetes', 'Gestational diabetes', 'unknown'])->default('unknown');
-            //            $table->string('attachments')->nullable();
+            $table->enum('diabetic_type', ['Type 1 Diabetes', 'Type 2 Diabetes', 'Gestational diabetes', 'unknown'])->default('unknown')->nullable();
+            $table->text('patient_status')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
