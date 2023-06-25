@@ -20,6 +20,7 @@ class CreateReviewsTable extends Migration
             $table->string('review_day');
             $table->date('review_date');
             $table->time('review_time');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

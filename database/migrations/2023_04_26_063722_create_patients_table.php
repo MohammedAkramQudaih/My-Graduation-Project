@@ -26,7 +26,7 @@ class CreatePatientsTable extends Migration
             $table->date('birthdate')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->enum('diabetic_type', ['Type 1 Diabetes', 'Type 2 Diabetes', 'Gestational diabetes', 'unknown'])->default('unknown')->nullable();
-            $table->text('patient_status')->nullable();
+            $table->longText('patient_status')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

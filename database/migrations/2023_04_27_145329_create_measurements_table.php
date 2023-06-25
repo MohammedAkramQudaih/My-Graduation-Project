@@ -20,6 +20,7 @@ class CreateMeasurementsTable extends Migration
             $table->float('Fasting')->nullable();   //صائم
             $table->float('creator')->nullable();   // مفطر
             $table->float('random')->nullable();    ///  عشوائي
+            $table->softDeletes();
             $table->timestamps();
         });
     }

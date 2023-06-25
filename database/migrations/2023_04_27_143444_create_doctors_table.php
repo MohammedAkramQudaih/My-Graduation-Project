@@ -25,6 +25,8 @@ class CreateDoctorsTable extends Migration
             $table->string('address')->nullable();
             $table->string('image')->nullable();
             $table->enum('rateing',[0,1,2,3,4,5])->default(0);
+            $table->enum('status',['open','closed'])->default('open');
+
             $table->softDeletes();
             $table->timestamps();
         });

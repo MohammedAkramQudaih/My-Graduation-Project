@@ -115,7 +115,7 @@ class PatientController extends Controller
     public function profile(Request $request)
     {
         $user = $request->user();
-        $patient = Patient::with('patientBiography', 'measurements', 'appointments', 'attachments','reviews','doctors')->where('user_id', $user->id)->first();
+        $patient = Patient::with('patientBiography', 'measurements', 'appointments', 'attachments', 'reviews', 'doctors')->where('user_id', $user->id)->first();
         // return $patient;
 
         // return response()->json([
@@ -149,7 +149,7 @@ class PatientController extends Controller
             'phone_No' => ['numeric'],
             'age' => ['nullable'],
             'image' => ['file'],
-            'email' => ['email','unique:users','unique:patients'],
+            'email' => ['email', 'unique:users', 'unique:patients'],
             'name' => ['string'],
             // 'diabetic_type' => ['required'],
 
@@ -169,13 +169,13 @@ class PatientController extends Controller
         }
 
         // return($request->all());
-        if (!is_null($request->email)){
+        if (!is_null($request->email)) {
             // $user->email ==  $request->email;
-            $user->update(['email' => $request->email ,]);
+            $user->update(['email' => $request->email,]);
             // return $user;
         }
-        if (!is_null($request->name)){
-            $user->update(['name' => $request->name ,]);
+        if (!is_null($request->name)) {
+            $user->update(['name' => $request->name,]);
         }
         $patient->update($request->except('image'));
 
@@ -298,22 +298,41 @@ class PatientController extends Controller
         ]);
     }
 
+
     public function ratingDoctor(Request $request, $id)
     {
-        # code...
-        $doctor = Doctor::findOrFail($id);
-        // return $doctor;  
-        $rateing = $request->rateing;
+        $user = $request->user();
+        $patient = Patient::where('user_id', $user->id)->with('doctors')->first();
 
-        $doctor->update([
-            'rateing' => $rateing
-        ]);
+        if ($patient) {
+            $doctor = $patient->doctors->find($id);
 
-        return Response::json([
-            'code' => 200,
-            'messag' => 'the rateing for doctor',
-            'data' => $rateing
-        ]);
+            if ($doctor) {
+                $rateing = $request->rateing;
+
+                $doctor->update([
+                    'rateing' => $rateing
+                ]);
+
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Doctor rateing updated successfully',
+                    'data' => $rateing
+                ]);
+            } else {
+                return response()->json([
+                    'code' => 404,
+                    'message' => 'Doctor not found',
+                    'data' => []
+                ]);
+            }
+        } else {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Patient not found',
+                'data' => []
+            ]);
+        }
     }
 
     public function appointmentBooking(Request $request, $id)

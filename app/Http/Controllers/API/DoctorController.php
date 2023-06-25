@@ -177,5 +177,44 @@ class DoctorController extends Controller
             ]);
         }
     }
+
+
+    public function addReview(Request $request, $id)
+    {
+        $user = $request->user();
+        $doctor = Doctor::with('patients')->where('user_id', $user->id)->first();
+    
+        if ($doctor) {
+            $patient = $doctor->patients->find($id);
+    
+            if ($patient) {
+                $review = $doctor->reviews()->create([
+                    'patient_id' => $patient->id,
+                    'doctor_id' => $doctor->id,
+                    'review_day' => $request->review_day,
+                    'review_date' => $request->review_date,
+                    'review_time' => $request->review_time,
+                ]);
+    
+                return response()->json([
+                    'code' => 200,
+                    'message' => 'Review created successfully',
+                    'data' => $review
+                ]);
+            } else {
+                return response()->json([
+                    'code' => 404,
+                    'message' => 'Patient not found',
+                    'data' => []
+                ]);
+            }
+        } else {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Doctor not found',
+                'data' => []
+            ]);
+        }
+    }
     
 }

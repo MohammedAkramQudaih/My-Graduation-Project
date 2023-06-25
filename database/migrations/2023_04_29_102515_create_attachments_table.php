@@ -19,7 +19,7 @@ class CreateAttachmentsTable extends Migration
 //            $table->foreignId('doctor_id');
             $table->string('filename')->nullable();
             $table->string('filepath')->nullable();
-
+            $table->softDeletes();
             $table->timestamps();
         });
     }
