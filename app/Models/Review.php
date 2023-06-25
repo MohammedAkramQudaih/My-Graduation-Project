@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PatientBiography extends Model
+class Review extends Model
 {
     use HasFactory;
 
-    protected $guarded =[];
-
-    public function doctor(){
+    public function doctor()
+    {
         return $this->belongsTo(Doctor::class);
     }
 
-    public function patient(){
+    public function patient()
+    {
         return $this->belongsTo(Patient::class);
     }
 }

@@ -19,7 +19,8 @@ class AuthController extends Controller
     public function registerPatient(Request $request)
     {
         $validator =  Validator::make($request->all(), [
-            'email' => 'required','email','unique:patients','unique:users',
+            // 'email' => 'required','email','unique:patients','unique:users',
+            'email' => 'required|email|unique:patients|unique:users',
             'name' => 'required|string',
             'password' => ['required'],
 
@@ -63,7 +64,9 @@ class AuthController extends Controller
     public function registerDoctor(Request $request)
     {
         $validator =  Validator::make($request->all(), [
-            'email' => 'required|email|unique:doctors',
+            'email' => 'required|email|unique:doctors|unique:users',
+            // 'email' => 'required','email','unique:doctors','unique:users',
+
             'name' => 'required|string',
             'password' => ['required'],
 

@@ -63,5 +63,11 @@ Route::post('resetPassword', [AuthController::class,'resetPassword'])->name('pas
 
 /** Doctor Routes */
 
-Route::get('doctor/profile', [DoctorController::class,'profile'])->name('doctor.profile')->middleware('auth:sanctum');;
+Route::get('doctor/profile', [DoctorController::class,'profile'])->name('doctor.profile')->middleware('auth:sanctum');
+Route::get('doctor/showAllBookedAppointments', [DoctorController::class,'showAllBookedAppointments'])->name('doctor.showAllBookedAppointments')->middleware('auth:sanctum');
+Route::post('doctor/updateAppointment/{appointment}', [DoctorController::class,'updateAppointment'])->name('doctor.updateAppointment')->middleware('auth:sanctum');
+Route::get('doctor/allPatients', [DoctorController::class,'allPatients'])->name('doctor.allPatients')->middleware('auth:sanctum');
+Route::get('doctor/patientProfile/{patient}', [DoctorController::class,'patientProfile'])->name('doctor.patientProfile')->middleware('auth:sanctum');
+Route::post('doctor/addPatientBiography/{patient}', [DoctorController::class,'addPatientBiography'])->name('doctor.addPatientBiography')->middleware('auth:sanctum');
+// Route::get('doctor/updateAppointment', [DoctorController::class,'updateAppointment']);
 

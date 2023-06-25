@@ -115,7 +115,7 @@ class PatientController extends Controller
     public function profile(Request $request)
     {
         $user = $request->user();
-        $patient = Patient::with('patientBiography', 'measurements', 'appointments', 'attachments')->where('user_id', $user->id)->first();
+        $patient = Patient::with('patientBiography', 'measurements', 'appointments', 'attachments','reviews','doctors')->where('user_id', $user->id)->first();
         // return $patient;
 
         // return response()->json([
@@ -290,7 +290,7 @@ class PatientController extends Controller
     public function doctorProfile(Request $request, $id)
     {
         //
-        $doctor = Doctor::findOrFail($id);
+        $doctor = Doctor::with('workHours')->findOrFail($id);
         return Response::json([
             'code' => 200,
             'messag' => 'Dr. ' . $doctor->name . '`s data',  //Dr. Mohamed's data
@@ -321,7 +321,7 @@ class PatientController extends Controller
         # code...
         // $doctor=Doctor::findOrFail($id);
         $user = $request->user();
-        $patient = Patient::where('email', $user->email)->first();
+        $patient = Patient::where('user_id', $user->id)->first();
 
         $request->validate([
             'booking_day' => ['required'],

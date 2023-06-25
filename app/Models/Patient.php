@@ -25,7 +25,7 @@ class Patient extends Model
     }
 
     public function patientBiography(){
-        return $this->hasOne(PatientBiography::class);
+        return $this->hasMany(PatientBiography::class);
     }
     public function measurements(){
         return $this->hasMany(Measurement::class);
@@ -39,5 +39,15 @@ class Patient extends Model
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    public function doctors()
+    {
+        return $this->belongsToMany(Doctor::class);
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
     }
 }
