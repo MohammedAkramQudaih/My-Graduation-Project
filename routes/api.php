@@ -70,5 +70,6 @@ Route::get('doctor/allPatients', [DoctorController::class,'allPatients'])->name(
 Route::get('doctor/patientProfile/{patient}', [DoctorController::class,'patientProfile'])->name('doctor.patientProfile')->middleware('auth:sanctum');
 Route::post('doctor/addPatientBiography/{patient}', [DoctorController::class,'addPatientBiography'])->name('doctor.addPatientBiography')->middleware('auth:sanctum');
 Route::post('doctor/addReview/{patient}', [DoctorController::class,'addReview'])->name('doctor.addReview')->middleware('auth:sanctum');
-// Route::get('doctor/updateAppointment', [DoctorController::class,'updateAppointment']);
+Route::post('doctor/addWorkHours', [DoctorController::class,'addWorkHours'])->name('doctor.addWorkHours')->middleware('auth:sanctum');
+Route::get('doctor/searchPatients', [DoctorController::class, 'searchPatients'])->name('searchPatients')->middleware('auth:sanctum');
 

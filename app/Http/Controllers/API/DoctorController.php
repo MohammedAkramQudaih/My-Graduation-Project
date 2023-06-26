@@ -145,10 +145,10 @@ class DoctorController extends Controller
     {
         $user = $request->user();
         $doctor = Doctor::with('patients')->where('user_id', $user->id)->first();
-    
+
         if ($doctor) {
             $patient = $doctor->patients->find($id);
-    
+
             if ($patient) {
                 $patientBiography = $doctor->patientBiographies()->create([
                     'patient_id' => $patient->id,
@@ -156,7 +156,7 @@ class DoctorController extends Controller
                     'diagnostics' => $request->diagnostics,
                     'medications' => $request->medications
                 ]);
-    
+
                 return response()->json([
                     'code' => 200,
                     'message' => 'Patient biography created successfully',
@@ -183,10 +183,10 @@ class DoctorController extends Controller
     {
         $user = $request->user();
         $doctor = Doctor::with('patients')->where('user_id', $user->id)->first();
-    
+
         if ($doctor) {
             $patient = $doctor->patients->find($id);
-    
+
             if ($patient) {
                 $review = $doctor->reviews()->create([
                     'patient_id' => $patient->id,
@@ -195,7 +195,7 @@ class DoctorController extends Controller
                     'review_date' => $request->review_date,
                     'review_time' => $request->review_time,
                 ]);
-    
+
                 return response()->json([
                     'code' => 200,
                     'message' => 'Review created successfully',
@@ -216,5 +216,59 @@ class DoctorController extends Controller
             ]);
         }
     }
-    
+
+    public function addWorkHours(Request $request)
+    {
+        $user = $request->user();
+        $doctor = Doctor::with('workHours')->where('user_id', $user->id)->first();
+
+        // return $doctor;
+        $request->validate([
+            'day' => ['required'],
+            'start_time' => ['required'],
+            'end_time' => ['required'],
+
+        ]);
+
+
+        $workHours = $doctor->workHours()->create([
+            'doctor_id' => $doctor->id,
+            'day' => $request->day,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+        ]);
+        return response()->json([
+            'code' => 200,
+            'message' => 'Review created successfully',
+            'data' => $workHours
+        ]);
+    }
+
+    public function searchPatients(Request $request)
+    {
+        $query = $request->input('query');
+        $user = $request->user();
+        $doctor = Doctor::with('patients')->where('user_id', $user->id)->first();
+
+        if ($doctor) {
+            $patients = $doctor->patients;
+
+            $results = $patients->filter(function ($patient) use ($query) {
+                return stripos($patient->name, $query) !== false;
+            });
+
+
+            return response()->json([
+                'code' => 200,
+                'message' => 'Patients search results',
+                'data' => $results
+            ]);
+        } else {
+            return response()->json([
+                'code' => 404,
+                'message' => 'Doctor not found',
+                'data' => []
+            ]);
+        }
+    }
 }
