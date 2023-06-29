@@ -21,6 +21,7 @@ class CreateWorkHoursTable extends Migration
             $table->enum('day', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
             $table->time('start_time');
             $table->time('end_time');
+            $table->unique(['doctor_id', 'day', 'start_time', 'end_time']);
             $table->softDeletes();
             $table->timestamps();
         });

@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('index',[DashboardController::class,'index'])->name('admin.index');
+Route::get('admin',[DashboardController::class,'index'])->name('admin.index');
 
 // Route::resource('admin/users', UserController::class)->names([
 //     'index' => 'admin.users.list',

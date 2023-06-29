@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\Patient;
+use App\Models\WorkHour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -217,19 +218,57 @@ class DoctorController extends Controller
         }
     }
 
+    // public function addWorkHours(Request $request)
+    // {
+    //     $user = $request->user();
+    //     $doctor = Doctor::with('workHours')->where('user_id', $user->id)->first();
+
+    //     // return $doctor;
+    //     $request->validate([
+    //         'day' => ['required'],
+    //         'start_time' => ['required'],
+    //         'end_time' => ['required'],
+
+    //     ]);
+
+
+    //     $workHours = $doctor->workHours()->create([
+    //         'doctor_id' => $doctor->id,
+    //         'day' => $request->day,
+    //         'start_time' => $request->start_time,
+    //         'end_time' => $request->end_time,
+    //     ]);
+    //     return response()->json([
+    //         'code' => 200,
+    //         'message' => 'Review created successfully',
+    //         'data' => $workHours
+    //     ]);
+    // }
     public function addWorkHours(Request $request)
     {
         $user = $request->user();
         $doctor = Doctor::with('workHours')->where('user_id', $user->id)->first();
 
-        // return $doctor;
         $request->validate([
             'day' => ['required'],
             'start_time' => ['required'],
             'end_time' => ['required'],
-
         ]);
 
+        // Check if work hours already exist for the specified day and time
+        $existingWorkHours = $doctor->workHours()
+            ->where('day', $request->day)
+            ->where('start_time', $request->start_time)
+            ->where('end_time', $request->end_time)
+            ->exists();
+
+        if ($existingWorkHours) {
+            return response()->json([
+                'code' => 409,
+                'message' => 'Work hours already exist for the specified day and time',
+                'data' => []
+            ]);
+        }
 
         $workHours = $doctor->workHours()->create([
             'doctor_id' => $doctor->id,
@@ -237,10 +276,87 @@ class DoctorController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
         ]);
+
         return response()->json([
             'code' => 200,
-            'message' => 'Review created successfully',
+            'message' => 'Work hours created successfully',
             'data' => $workHours
+        ]);
+    }
+
+    public function editWorkHours(Request $request, $id)
+    {
+        $user = $request->user();
+        $doctor = Doctor::with('workHours')->where('user_id', $user->id)->first();
+
+        $request->validate([
+            'day' => ['required'],
+            'start_time' => ['required'],
+            'end_time' => ['required'],
+        ]);
+
+        $workHours = WorkHour::findOrFail($id);
+
+        // Check if the work hours belong to the requesting doctor
+        if ($workHours->doctor_id !== $doctor->id) {
+            return response()->json([
+                'code' => 403,
+                'message' => 'Unauthorized to edit the work hours',
+                'data' => []
+            ]);
+        }
+
+        // Check if work hours already exist for the specified day and time
+        $existingWorkHours = $doctor->workHours()
+            ->where('day', $request->day)
+            ->where('start_time', $request->start_time)
+            ->where('end_time', $request->end_time)
+            ->where('id', '!=', $id)
+            ->exists();
+
+        if ($existingWorkHours) {
+            return response()->json([
+                'code' => 409,
+                'message' => 'Work hours already exist for the specified day and time',
+                'data' => []
+            ]);
+        }
+
+        $workHours->update([
+            'day' => $request->day,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+        ]);
+
+        return response()->json([
+            'code' => 200,
+            'message' => 'Work hours updated successfully',
+            'data' => $workHours
+        ]);
+    }
+
+    public function deleteWorkHours(Request $request, $id)
+    {
+        $user = $request->user();
+        $doctor = Doctor::with('workHours')->where('user_id', $user->id)->first();
+
+        $workHours = WorkHour::findOrFail($id);
+
+        // Check if the work hours belong to the requesting doctor
+        if ($workHours->doctor_id !== $doctor->id) {
+            return response()->json([
+                'code' => 403,
+                'message' => 'Unauthorized to delete the work hours',
+                'data' => []
+            ]);
+        }
+
+        $workHours->delete();
+
+        return response()->json([
+            'code' => 200,
+            'message' => 'Work hours deleted successfully',
+            'data' => []
         ]);
     }
 

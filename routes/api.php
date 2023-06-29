@@ -72,4 +72,6 @@ Route::post('doctor/addPatientBiography/{patient}', [DoctorController::class,'ad
 Route::post('doctor/addReview/{patient}', [DoctorController::class,'addReview'])->name('doctor.addReview')->middleware('auth:sanctum');
 Route::post('doctor/addWorkHours', [DoctorController::class,'addWorkHours'])->name('doctor.addWorkHours')->middleware('auth:sanctum');
 Route::get('doctor/searchPatients', [DoctorController::class, 'searchPatients'])->name('searchPatients')->middleware('auth:sanctum');
+Route::post('doctor/editWorkHours/{workHour}', [DoctorController::class,'editWorkHours'])->name('doctor.editWorkHours')->middleware('auth:sanctum');
+Route::post('doctor/deleteWorkHours/{workHour}', [DoctorController::class,'deleteWorkHours'])->name('doctor.deleteWorkHours')->middleware('auth:sanctum');
 
