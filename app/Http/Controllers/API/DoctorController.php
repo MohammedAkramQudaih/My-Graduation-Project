@@ -252,7 +252,7 @@ class DoctorController extends Controller
         $request->validate([
             'day' => ['required'],
             'start_time' => ['required'],
-            'end_time' => ['required'],
+            'end_time' => ['required', 'after:start_time'],
         ]);
 
         // Check if work hours already exist for the specified day and time
@@ -292,7 +292,7 @@ class DoctorController extends Controller
         $request->validate([
             'day' => ['required'],
             'start_time' => ['required'],
-            'end_time' => ['required'],
+            'end_time' => ['required', 'after:start_time'],
         ]);
 
         $workHours = WorkHour::findOrFail($id);
