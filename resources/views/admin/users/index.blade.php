@@ -21,7 +21,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
-            {{-- <th>Actions</th> --}}
+            <th>Created</th>
         </tr>
         @forelse ($users as $user)
             <tr>
@@ -30,6 +30,7 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->role }}</td>
+                <td>{{ $user->created_at->diffForHumans() }}</td>
                 
               
 
