@@ -23,25 +23,13 @@ Route::get('/', function () {
 
 Route::get('admin',[DashboardController::class,'index'])->name('admin.index');
 
-// Route::resource('admin/users', UserController::class)->names([
-//     'index' => 'admin.users.list',
-//     'create' => 'admin.user.create',
-//     'store' => 'admin.user.store',
-//     'show' => 'admin.user.show',
-//     'edit' => 'admin.user.edit',
-//     'update' => 'admin.user.update',
-//     'destroy' => 'admin.user.destroy',
-// ])->middleware('auth', RoleMiddleware::class . ':admin');
-// Route::post('admin/users/restore/{user}',[UserController::class,'restore'])->name('admin.user.restore')->middleware('auth', RoleMiddleware::class . ':admin'); 
-
-
 Route::get('admin/users/index',[UserController::class,'index'])->name('admin.users.list');
 // Route::get('admin/users/create',[UserController::class,'create'])->name('admin.user.create');
 // Route::post('admin/users/store',[UserController::class,'store'])->name('admin.users.store');
-Route::get('admin/users/edit/{user}',[UserController::class,'edit'])->name('admin.user.edit');
-Route::post('admin/users/update/{user}',[UserController::class,'update'])->name('admin.user.update');
-Route::post('admin/users/destroy/{user}',[UserController::class,'destroy'])->name('admin.user.destroy');
-Route::post('admin/users/restore/{user}',[UserController::class,'restore'])->name('admin.user.restore'); 
+// Route::get('admin/users/edit/{user}',[UserController::class,'edit'])->name('admin.user.edit');
+// Route::post('admin/users/update/{user}',[UserController::class,'update'])->name('admin.user.update');
+// Route::post('admin/users/destroy/{user}',[UserController::class,'destroy'])->name('admin.user.destroy');
+// Route::post('admin/users/restore/{user}',[UserController::class,'restore'])->name('admin.user.restore'); 
 
 
 
@@ -53,6 +41,13 @@ Route::post('admin/patients/update/{patient}',[PatientController::class,'update'
 Route::post('admin/patients/destroy/{patient}',[PatientController::class,'destroy'])->name('admin.patient.destroy');
 Route::post('admin/patients/restore/{patient}',[PatientController::class,'restore'])->name('admin.patient.restore'); 
 
+Route::get('admin/patients/patientBiography/{patient}',[PatientController::class,'patientBiography'])->name('admin.patient.patientBiography');
+Route::get('admin/patients/measurements/{patient}',[PatientController::class,'measurements'])->name('admin.patient.measurements');
+Route::get('admin/patients/appointments/{patient}',[PatientController::class,'appointments'])->name('admin.patient.appointments');
+Route::get('admin/patients/attachments/{patient}',[PatientController::class,'attachments'])->name('admin.patient.attachments');
+// Route::get('admin/patients/doctors/{patient}',[PatientController::class,'doctors'])->name('admin.patient.doctors');
+Route::get('admin/patients/reviews/{patient}',[PatientController::class,'reviews'])->name('admin.patient.reviews');
+
 
 
 Route::get('admin/doctors/index',[DoctorController::class,'index'])->name('admin.doctors.list');
@@ -62,3 +57,10 @@ Route::get('admin/doctors/edit/{doctor}',[DoctorController::class,'edit'])->name
 Route::post('admin/doctors/update/{doctor}',[DoctorController::class,'update'])->name('admin.doctor.update');
 Route::post('admin/doctors/destroy/{doctor}',[DoctorController::class,'destroy'])->name('admin.doctor.destroy');
 Route::post('admin/doctors/restore/{doctor}',[DoctorController::class,'restore'])->name('admin.doctor.restore'); 
+
+Route::get('admin/doctors/patientBiographies/{doctor}',[DoctorController::class,'patientBiographies'])->name('admin.doctor.patientBiographies');
+Route::get('admin/doctors/workHours/{doctor}',[DoctorController::class,'workHours'])->name('admin.doctor.workHours');
+Route::get('admin/doctors/appointments/{doctor}',[DoctorController::class,'appointments'])->name('admin.doctor.appointments');
+// Route::get('admin/doctors/patients/{doctor}',[DoctorController::class,'patients'])->name('admin.doctor.patients');
+Route::get('admin/doctors/reviews/{doctor}',[DoctorController::class,'reviews'])->name('admin.doctor.reviews');
+

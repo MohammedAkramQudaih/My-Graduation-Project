@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ADMIN;
 
 use App\Http\Controllers\Controller;
 use App\Models\Doctor;
+use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -200,5 +201,48 @@ class DoctorController extends Controller
         $doctor->restore();
 
         return redirect()->route('admin.doctors.list')->with('msg', 'Doctor Restored Successfully')->with('type', 'info');
+    }
+
+
+
+
+
+
+
+
+
+
+
+    public function patientBiographies($id)
+    {
+        //
+        $patients = Patient::get();
+        $doctor = Doctor::with('patientBiographies')->findOrFail($id);
+        $patientBiographies = $doctor->patientBiographies()->paginate(15);
+        return view('admin.doctors.patientBiographies', compact('doctor','patientBiographies','patients'));
+    }
+    public function workHours($id)
+    {
+        //
+        $doctor = Doctor::with('workHours')->findOrFail($id);
+        $workHours = $doctor->workHours()->paginate(15);
+        return view('admin.doctors.workHours', compact('doctor','workHours'));
+    }
+    public function appointments($id)
+    {
+        //
+        $patients = Patient::get();
+        $doctor = Doctor::with('appointments')->findOrFail($id);
+        $appointments = $doctor->appointments()->paginate(15);
+        return view('admin.doctors.appointments', compact('doctor','appointments','patients'));
+    }
+
+    public function reviews($id)
+    {
+        //
+        $patients = Patient::get();
+        $doctor = Doctor::with('reviews')->findOrFail($id);
+        $reviews = $doctor->reviews()->paginate(15);
+        return view('admin.doctors.reviews', compact('doctor','reviews','patients'));
     }
 }

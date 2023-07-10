@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\ADMIN;
 
 use App\Http\Controllers\Controller;
+use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -195,5 +196,60 @@ class PatientController extends Controller
         $patient->restore();
 
         return redirect()->route('admin.patients.list')->with('msg', 'Patient Restored Successfully')->with('type', 'info');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    public function patientBiography($id)
+    {
+        //
+        $doctors = Doctor::get();
+        $patient = Patient::with('patientBiography')->findOrFail($id);
+        $patientBiographies = $patient->patientBiography()->paginate(15);
+
+        // dd($patient);
+        return view('admin.patients.patientBiography', compact('doctors','patientBiographies','patient'));
+        
+    }
+    public function measurements($id)
+    {
+        //
+        
+        $patient = Patient::with('measurements')->findOrFail($id);
+        $measurements = $patient->measurements()->paginate(15);
+        return view('admin.patients.measurements', compact('patient','measurements'));
+    }
+    public function appointments($id)
+    {
+        //
+        $doctors = Doctor::get();
+        $patient = Patient::with('appointments')->findOrFail($id);
+        $appointments = $patient->appointments()->paginate(15);
+        return view('admin.patients.appointments', compact('patient','appointments','doctors'));
+    }
+    public function attachments($id)
+    {
+        //
+        $patient = Patient::with('attachments')->findOrFail($id);
+        $attachments = $patient->attachments()->paginate(15);
+        return view('admin.patients.attachments', compact('patient','attachments'));
+    }
+
+    public function reviews($id)
+    {
+        //
+        $doctors = Doctor::get();
+        $patient = Patient::with('reviews')->findOrFail($id);
+        $reviews = $patient->reviews()->paginate(15);
+        return view('admin.patients.reviews', compact('patient','reviews','doctors'));
     }
 }

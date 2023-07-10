@@ -45,25 +45,40 @@
                 {{-- <td>{{ $patient->birthdate }}</td> --}}
                 <td>{{ $doctor->rateing }}</td>
                 <td>{{ $doctor->status }}</td>
-                <td><img src="{{ asset('adminimages/doctor/' . $doctor->image) }}" width="100" height="100" alt=""></td>
+                <td><img src="{{ asset('adminimages/doctor/' . $doctor->image) }}" width="100" height="100"
+                        alt=""></td>
 
                 {{-- <td>{{ $patient->patient_status }}</td> --}}
 
 
                 <td>
                     @if ($doctor->deleted_at == null)
-                    <a href="{{ route('admin.doctor.edit', $doctor->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                    <form class="d-inline" action="{{ route('admin.doctor.destroy', $doctor->id) }}" method="POST">
-                        @csrf
-                        {{-- @method('delete') --}}
-                        <button onclick="return confirm('Are you sour?!')" class="btn btn-danger btn-sm">Delete</button>
-                    </form>
-                @else
-                    <form class="d-inline" action="{{ route('admin.doctor.restore', $doctor->id) }}" method="POST">
-                        @csrf
-                        <button class="btn btn-warning btn-sm">Restore</button>
-                    </form>
-                @endif
+                        <div class="btn-group-vertical" role="group">
+                            <a href="{{ route('admin.doctor.edit', $doctor->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{ route('admin.doctor.patientBiographies', $doctor->id) }}"
+                                class="btn btn-info btn-sm">PatientBiographies</a>
+                            <a href="{{ route('admin.doctor.workHours', $doctor->id) }}"
+                                class="btn btn-success btn-sm">Work Hours</a>
+                            <a href="{{ route('admin.doctor.appointments', $doctor->id) }}"
+                                class="btn btn-info btn-sm">Appointments</a>
+                            {{-- <a href="{{ route('admin.doctor.patients', $doctor->id) }}"
+                                class="btn btn-success btn-sm">Patients</a> --}}
+                            <a href="{{ route('admin.doctor.reviews', $doctor->id) }}"
+                                class="btn btn-success btn-sm">Reviews</a>
+                            <form class="d-inline" action="{{ route('admin.doctor.destroy', $doctor->id) }}"
+                                method="POST">
+                                @csrf
+                                {{-- @method('delete') --}}
+                                <button onclick="return confirm('Are you sour?!')"
+                                    class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    @else
+                        <form class="d-inline" action="{{ route('admin.doctor.restore', $doctor->id) }}" method="POST">
+                            @csrf
+                            <button class="btn btn-warning btn-sm">Restore</button>
+                        </form>
+                    @endif
                 </td>
             </tr>
         @empty
