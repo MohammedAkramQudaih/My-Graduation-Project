@@ -4,9 +4,13 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.index') }}">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            {{-- <i class="fas fa-laugh-wink"></i> --}}
+            {{-- <img src="" alt=""> --}}
+            <img class="logo rounded-circle img-fluid d-block mx-auto my-auto" src="{{ asset('adminstyle/img/logo_diabetes.jpeg') }}"alt=""width="100" height="100">
+
         </div>
-        <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel') }} </div>
+        {{-- <div class="sidebar-brand-text mx-3">{{ config('app.name', 'Laravel') }} </div> --}}
+        <div class="sidebar-brand-text mx-3">{{ 'diabetes Admin' }} </div>
     </a>
 
     <!-- Divider -->
@@ -29,12 +33,12 @@
 
         <!-- Nav Item - Pages Users Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Users"
                 aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>Users</span>
             </a>
-            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="Users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Operations:</h6>
                     <a class="collapse-item" href="{{ route('admin.users.list') }}">Show All Users</a>
@@ -47,17 +51,17 @@
     
         <!-- Heading -->
         <div class="sidebar-heading">
-            doctors
+            Doctors
         </div>
     
         <!-- Nav Item - Pages Tasks Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#task" aria-expanded="true"
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#doctors" aria-expanded="true"
                 aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>doctors</span>
+                <span>Doctors</span>
             </a>
-            <div id="task" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="doctors" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Operations:</h6>
                     <a class="collapse-item" href="{{ route('admin.doctors.list') }}">Show All doctors</a>
@@ -71,21 +75,44 @@
     
         <!-- Heading -->
         <div class="sidebar-heading">
-            patients
+            Patients
         </div>
     
         <!-- Nav Item - Pages Banners Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#banner" aria-expanded="true"
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#patients" aria-expanded="true"
                 aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>patients</span>
+                <span>Patients</span>
             </a>
-            <div id="banner" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div id="patients" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Operations:</h6>
                     <a class="collapse-item" href="{{ route('admin.patients.list') }}">Show All patients</a>
                     <a class="collapse-item" href="{{ route('admin.patient.create') }}">Add new patient</a>
+                </div>
+            </div>
+        </li>
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+    
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Admins
+        </div>
+    
+        <!-- Nav Item - Pages Banners Menu -->
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#admins" aria-expanded="true"
+                aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>Admins</span>
+            </a>
+            <div id="admins" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Custom Operations:</h6>
+                    <a class="collapse-item" href="{{ route('admins.list') }}">Show All Admins</a>
+                    <a class="collapse-item" href="{{ route('admin.create') }}">Add new Admin</a>
                 </div>
             </div>
         </li>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ADMIN\AdminController;
 use App\Http\Controllers\ADMIN\DashboardController;
 use App\Http\Controllers\ADMIN\DoctorController;
 use App\Http\Controllers\ADMIN\PatientController;
@@ -64,3 +65,11 @@ Route::get('admin/doctors/appointments/{doctor}',[DoctorController::class,'appoi
 // Route::get('admin/doctors/patients/{doctor}',[DoctorController::class,'patients'])->name('admin.doctor.patients');
 Route::get('admin/doctors/reviews/{doctor}',[DoctorController::class,'reviews'])->name('admin.doctor.reviews');
 
+
+Route::get('admin/admins/index',[AdminController::class,'index'])->name('admins.list');
+Route::get('admin/admins/create',[AdminController::class,'create'])->name('admin.create');
+Route::post('admin/admins/store',[AdminController::class,'store'])->name('admin.store');
+Route::get('admin/admins/edit/{admin}',[AdminController::class,'edit'])->name('admin.edit');
+Route::post('admin/admins/update/{admin}',[AdminController::class,'update'])->name('admin.update');
+Route::post('admin/admins/destroy/{admin}',[AdminController::class,'destroy'])->name('admin.destroy');
+Route::post('admin/admins/restore/{admin}',[AdminController::class,'restore'])->name('admin.restore'); 
