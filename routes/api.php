@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('patient/register',[AuthController::class,'registerPatient'])->name('patient.register');
+// Route::post('patient/register',[AuthController::class,'registerPatient'])->name('patient.register');
 Route::post('patient/login',[AuthController::class,'loginPatient'])->name('patient.login');
 
 Route::post('doctor/register',[AuthController::class,'registerDoctor'])->name('doctor.register');

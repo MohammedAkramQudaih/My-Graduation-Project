@@ -61,47 +61,49 @@ class AuthController extends Controller
 /** سأقوم بحذف هذه الدالة فور الا نتهاء من تجهيو الداشبورد registerDoctore
  * لان الطبيب لا يشترك بالتطبيق بنفسه وانما يقوم الادمن بإضافته
 */
-    public function registerDoctor(Request $request)
-    {
-        $validator =  Validator::make($request->all(), [
-            'email' => 'required|email|unique:doctors|unique:users',
-            // 'email' => 'required','email','unique:doctors','unique:users',
+    // public function registerDoctor(Request $request)
+    // {
+    //     $validator =  Validator::make($request->all(), [
+    //         'email' => 'required|email|unique:doctors|unique:users',
+    //         // 'email' => 'required','email','unique:doctors','unique:users',
 
-            'name' => 'required|string',
-            'password' => ['required'],
+    //         'name' => 'required|string',
+    //         'password' => ['required'],
 
-        ]);
-        if ($validator->fails()) {
+    //     ]);
+    //     if ($validator->fails()) {
 
-            return Response::json([
-                'code' => 400,
-                'message' => 'registration failed',
-                'data' => $validator->messages(),
-            ]);
-        }else{
-            $user = new User([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'doctor'
-            ]);
-            $user->save();
-            $user = User::where('email', $request->email)->first();
-            $user_id = $user->getAttribute('id');
-            //create the patient row
-            $doctor = new Doctor([
-                'name' => $request->name,
-                'email' => $request->email,
-                'user_id' => $user_id,
-            ]);
-            $doctor->save();
-            return Response::json([
-                'code' => 200,
-                'message' => 'successfully registered doctor',
-                'data' => $doctor,
-            ]);
-        }
-    }
+    //         return Response::json([
+    //             'code' => 400,
+    //             'message' => 'registration failed',
+    //             'data' => $validator->messages(),
+    //         ]);
+    //     }else{
+    //         $user = new User([
+    //             'name' => $request->name,
+    //             'email' => $request->email,
+    //             'password' => Hash::make($request->password),
+    //             'role' => 'doctor'
+    //         ]);
+    //         $user->save();
+    //         $user = User::where('email', $request->email)->first();
+    //         $user_id = $user->getAttribute('id');
+    //         //create the patient row
+    //         $doctor = new Doctor([
+    //             'name' => $request->name,
+    //             'email' => $request->email,
+    //             'user_id' => $user_id,
+    //         ]);
+    //         $doctor->save();
+    //         return Response::json([
+    //             'code' => 200,
+    //             'message' => 'successfully registered doctor',
+    //             'data' => $doctor,
+    //         ]);
+    //     }
+    // }
+    /** تم تعطيل هذه الفنكشن من قبل Mohammed Akram Qudaih */
+    
     public function loginPatient(Request $request)
     {
         $validator = Validator::make($request->all(), [

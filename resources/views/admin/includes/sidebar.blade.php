@@ -35,7 +35,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Users"
                 aria-expanded="true" aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-light fa-users fa-lg fa-2x"></i>
                 <span>Users</span>
             </a>
             <div id="Users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -58,7 +58,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#doctors" aria-expanded="true"
                 aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-regular fa-stethoscope fa-lg fa-2x"></i>
                 <span>Doctors</span>
             </a>
             <div id="doctors" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -82,7 +82,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#patients" aria-expanded="true"
                 aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-solid fa-hospital-user fa-lg fa-2x"></i>
                 <span>Patients</span>
             </a>
             <div id="patients" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -105,7 +105,7 @@
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#admins" aria-expanded="true"
                 aria-controls="collapseTwo">
-                <i class="fas fa-fw fa-cog"></i>
+                <i class="fas fa-sharp fa-solid fa-user-tie fa-lg fa-2x"></i>
                 <span>Admins</span>
             </a>
             <div id="admins" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
