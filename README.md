@@ -1,6 +1,6 @@
 # Follow-up of Diabetic Patients (Backend)
 
-Repository: <https://github.com/MohammedAkramQudaih/My-Graduation-Project>
+Repository: https://github.com/MohammedAkramQudaih/My-Graduation-Project
 
 ## About
 This repository contains the backend (Laravel) for **Follow-up of Diabetic Patients** — a healthcare platform that connects diabetic patients with doctors. It provides a web-based Admin dashboard for managing doctors, patients, and admins, along with a REST API consumed by a mobile application for patient/doctor interactions: appointments, blood sugar measurements, medical biographies, work hours, and doctor reviews.
@@ -68,8 +68,8 @@ This repository contains the backend (Laravel) for **Follow-up of Diabetic Patie
 
 1. Clone the repository
 ```sh
-git clone <repository-url>
-cd <project-folder>
+git clone https://github.com/MohammedAkramQudaih/My-Graduation-Project.git
+cd My-Graduation-Project
 ```
 
 2. Copy the example environment file
